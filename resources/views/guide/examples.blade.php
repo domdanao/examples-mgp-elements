@@ -236,7 +236,7 @@
   function viewSource(event, path) {
     event.preventDefault();
     event.stopPropagation();
-    
+
     // Fetch and display source code
     fetch(path)
       .then(r => r.text())
@@ -264,10 +264,12 @@
             </style>
           </head>
           <body>
-            <pre>${html.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+            <pre id="source"></pre>
           </body>
           </html>
         `);
+        const pre = newWindow.document.getElementById('source');
+        pre.textContent = html;
         newWindow.document.close();
       });
   }
