@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kitschy — Magpie Components</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    @keyframes rainbow {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-6px); }
+    }
+
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(0deg); }
+      25%       { transform: rotate(-3deg); }
+      75%       { transform: rotate(3deg); }
+    }
+
+    body {
+      font-family: "Comic Sans MS", "Chalkboard SE", cursive;
+      background: linear-gradient(270deg, #ff6ec7, #ffcd3c, #4dd9ff, #a78bfa, #ff6ec7);
+      background-size: 400% 400%;
+      animation: rainbow 8s ease infinite;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      background: #fffdf0;
+      border: 4px solid #ff3cac;
+      border-radius: 24px;
+      box-shadow: 8px 8px 0 #ff3cac, 16px 16px 0 rgba(255, 60, 172, 0.2);
+      padding: 36px;
+      width: 100%;
+      max-width: 460px;
+      position: relative;
+    }
+
+    .sticker {
+      position: absolute;
+      top: -22px;
+      right: 24px;
+      font-size: 40px;
+      animation: bounce 1.5s ease-in-out infinite;
+    }
+
+    h1 {
+      font-size: 26px;
+      color: #d1006e;
+      margin-bottom: 4px;
+      text-shadow: 2px 2px 0 #ffcd3c;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #7c3aed;
+      margin-bottom: 28px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+      color: #be185d;
+      margin-bottom: 6px;
+    }
+
+    .field {
+      border: 3px solid #f472b6;
+      border-radius: 12px;
+      padding: 10px 14px;
+      height: 48px;
+      margin-bottom: 18px;
+      background: #fff0f9;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .field:focus-within {
+      border-color: #7c3aed;
+      box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.2);
+      background: #fff;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .row .field { margin-bottom: 0; }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #ff3cac, #784ba0, #2b86c5);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      font-size: 17px;
+      font-family: "Comic Sans MS", "Chalkboard SE", cursive;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 8px;
+      letter-spacing: 0.03em;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 4px 4px 0 #7c3aed;
+    }
+
+    button:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 #7c3aed;
+    }
+
+    button:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 #7c3aed;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .stars {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      margin-top: 14px;
+      font-size: 18px;
+    }
+
+    .stars span { animation: wiggle 2s ease-in-out infinite; }
+    .stars span:nth-child(2) { animation-delay: 0.2s; }
+    .stars span:nth-child(3) { animation-delay: 0.4s; }
+    .stars span:nth-child(4) { animation-delay: 0.6s; }
+    .stars span:nth-child(5) { animation-delay: 0.8s; }
+
+    .message {
+      margin-top: 16px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .message.error {
+      background: #fff1f2;
+      color: #be123c;
+      border: 2px dashed #fda4af;
+    }
+
+    .message.success {
+      background: #f0fdf4;
+      color: #15803d;
+      border: 2px dashed #86efac;
+    }
+
+    /* Glass Nav */
+    .glass-nav {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 2px;
+      padding: 6px;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      border-radius: 22px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.14), inset 0 1px 0 rgba(255,255,255,0.8);
+      z-index: 9999;
+      white-space: nowrap;
+    }
+    .glass-nav a {
+      display: block;
+      padding: 8px 16px;
+      border-radius: 16px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #374151;
+      text-decoration: none;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      transition: background 0.15s, color 0.15s;
+    }
+    .glass-nav a:hover { background: rgba(0,0,0,0.07); }
+    .glass-nav a.active { background: rgba(0,0,0,0.1); color: #111; font-weight: 600; }
+    .glass-nav a.nav-home { padding: 8px 12px; }
+    .glass-nav a.nav-home svg { display: block; }
+
+    /* Dev Toolbar */
+    .dev-toolbar { position: fixed; top: 16px; right: 16px; display: flex; gap: 6px; z-index: 9999; }
+    .dev-btn {
+      display: flex; align-items: center; gap: 6px; padding: 7px 12px;
+      background: rgba(255,255,255,0.75); backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid rgba(255,255,255,0.6); border-radius: 20px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.8);
+      font-size: 12px; font-weight: 500; color: #374151;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      cursor: pointer; transition: background 0.15s, box-shadow 0.15s; outline: none;
+    }
+    .dev-btn:hover { background: rgba(255,255,255,0.92); box-shadow: 0 4px 16px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.9); }
+    .dev-btn svg { display: block; flex-shrink: 0; }
+    .dev-btn.copied { color: #16A34A; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="sticker">💳</div>
+
+    <h1>OMG Pay Now!! 🎉</h1>
+    <p class="subtitle">Super safe & totally secure, we promise!! 🔐✨</p>
+
+    <label>💳 Card Number</label>
+    <div class="field" id="card-number"></div>
+
+    <div class="row">
+      <div>
+        <label>📅 Expiry</label>
+        <div class="field" id="card-expiry"></div>
+      </div>
+      <div>
+        <label>🔒 CVC</label>
+        <div class="field" id="card-cvc"></div>
+      </div>
+    </div>
+
+    <button id="pay-btn">💸 PAY NOW!! 💸</button>
+
+    <div class="stars">
+      <span>⭐</span><span>🌈</span><span>💎</span><span>🌈</span><span>⭐</span>
+    </div>
+
+    <div id="message"></div>
+  </div>
+
+  <script src="https://components.magpie.im/sdk/magpie.js"></script>
+  <script>
+    const magpie   = new Magpie("pk_live_p6A1rkQCKQSlzFsGK9iWJE");
+    const elements = magpie.elements();
+
+    const style = {
+      style: {
+        base: {
+          fontFamily: '"Comic Sans MS", "Chalkboard SE", cursive',
+          fontSize: "15px",
+          color: "#7c3aed",
+          "::placeholder": { color: "#f9a8d4" }
+        }
+      }
+    };
+
+    const cardNumber = elements.create("cardNumber", style);
+    const cardExpiry = elements.create("cardExpiry", style);
+    const cardCvc    = elements.create("cardCvc", style);
+
+    cardNumber.mount("#card-number");
+    cardExpiry.mount("#card-expiry");
+    cardCvc.mount("#card-cvc");
+
+    const btn = document.getElementById("pay-btn");
+    const msg = document.getElementById("message");
+
+    btn.addEventListener("click", async () => {
+      msg.textContent = "";
+      msg.className = "message";
+      btn.disabled = true;
+      btn.textContent = "✨ Sending your monies... ✨";
+
+      try {
+        const source = await cardNumber.createSource({
+          redirect: {
+            success: "https://your-site.com/checkout/success",
+            fail: "https://your-site.com/checkout/fail",
+            notify: "https://your-site.com/checkout/notify"
+          }
+        });
+        msg.innerHTML = '🎊 YAY!! Payment done!! Source: <code style="font-family:monospace">' + source.id + '</code>';
+        msg.classList.add("success");
+      } catch (err) {
+        msg.textContent = "😱 Uh oh!! " + (err.message || "Something went wrong!!");
+        msg.classList.add("error");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "💸 PAY NOW!! 💸";
+      }
+    });
+  </script>
+
+  <div class="dev-toolbar">
+    <button class="dev-btn" id="copy-btn" onclick="devCopySource()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+      <span>Copy</span>
+    </button>
+    <button class="dev-btn" onclick="devDownloadSource()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+      <span>Download</span>
+    </button>
+  </div>
+
+  <nav class="glass-nav">
+    <a href="/examples/index.html" class="nav-home" title="Home"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></a>
+    <a href="/examples/01-basic/index.html">Basic</a>
+    <a href="/examples/02-stripe/index.html">Stripe</a>
+    <a href="/examples/03-kitschy/index.html">Kitschy</a>
+    <a href="/examples/04-brutalist/index.html">Brutalist</a>
+    <a href="/examples/05-full-form/index.html">Full Form</a>
+  </nav>
+  <script>
+    document.querySelectorAll('.glass-nav a').forEach(function(a) {
+      if (window.location.pathname.includes(a.getAttribute('href').replace('/index.html', ''))) {
+        a.classList.add('active');
+      }
+    });
+  </script>
+
+  <script>
+    function devCopySource() {
+      navigator.clipboard.writeText(document.documentElement.outerHTML).then(function() {
+        var btn = document.getElementById('copy-btn');
+        var span = btn.querySelector('span');
+        btn.classList.add('copied');
+        span.textContent = 'Copied!';
+        setTimeout(function() { btn.classList.remove('copied'); span.textContent = 'Copy'; }, 2000);
+      });
+    }
+    function devDownloadSource() {
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([document.documentElement.outerHTML], { type: 'text/html' }));
+      a.download = 'magpie-kitschy.html';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+  </script>
+</body>
+</html>
