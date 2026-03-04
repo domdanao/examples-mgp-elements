@@ -505,31 +505,6 @@
       </div>
     </div>
 
-    <!-- Redirect URLs -->
-    <div class="section">
-      <div class="section-header">
-        <div class="icon icon-redir">🔗</div>
-        <div>
-          <h2>Redirect URLs</h2>
-          <p>Optional — used for 3DS authentication flow</p>
-        </div>
-      </div>
-      <div class="section-body">
-        <div class="field-wrap">
-          <label>Success URL <span class="optional">(optional)</span></label>
-          <input id="redirect-success" type="url" placeholder="https://your-site.com/checkout/success" />
-        </div>
-        <div class="field-wrap">
-          <label>Fail URL <span class="optional">(optional)</span></label>
-          <input id="redirect-fail" type="url" placeholder="https://your-site.com/checkout/fail" />
-        </div>
-        <div class="field-wrap" style="margin-bottom:0">
-          <label>Notify URL <span class="optional">(optional)</span></label>
-          <input id="redirect-notify" type="url" placeholder="https://your-site.com/checkout/notify" />
-        </div>
-      </div>
-    </div>
-
     <!-- Metadata -->
     <div class="section">
       <div class="section-header">
@@ -675,11 +650,11 @@
         shipping,
       });
 
-      // Redirect is required - use form values or defaults
+      // Redirect is required - use default values
       const redirect = {
-        success: val("redirect-success") || "https://your-site.com/success",
-        fail:    val("redirect-fail")    || "https://your-site.com/fail",
-        notify:  val("redirect-notify")  || "https://your-site.com/notify",
+        success: "https://your-site.com/success",
+        fail:    "https://your-site.com/fail",
+        notify:  "https://your-site.com/notify",
       };
 
       const additionalData = {

@@ -345,9 +345,6 @@ The card number, expiry, and CVC come from the mounted input fields. The `name` 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
 | `name` | `string` | **Yes** | Cardholder name as it appears on the card |
-| `redirect.success` | `string` | **Yes** | URL to redirect to after successful 3DS authentication |
-| `redirect.fail` | `string` | **Yes** | URL to redirect to after failed 3DS authentication |
-| `redirect.notify` | `string` | **Yes** | Webhook URL for async payment status notifications |
 | `address_line1` | `string` | No | Card billing address line 1 |
 | `address_line2` | `string` | No | Card billing address line 2 |
 | `address_city` | `string` | No | Card billing city |
@@ -355,7 +352,15 @@ The card number, expiry, and CVC come from the mounted input fields. The `name` 
 | `address_country` | `string` | No | Card billing country (ISO 3166-1 alpha-2, e.g. `"PH"`) |
 | `address_zip` | `string` | No | Card billing postal code |
 
+**Redirect URLs**
 
+The `redirect` object is required but should be hardcoded in your integration — do not collect these from customers. These URLs handle 3DS authentication flow and payment notifications.
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `redirect.success` | `string` | **Yes** | URL to redirect to after successful 3DS authentication |
+| `redirect.fail` | `string` | **Yes** | URL to redirect to after failed 3DS authentication |
+| `redirect.notify` | `string` | **Yes** | Webhook URL for async payment status notifications |
 
 **Owner**
 
