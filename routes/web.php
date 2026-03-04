@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [GuideController::class, 'index'])->name('guide.index');
 Route::get('/docs', [GuideController::class, 'docs'])->name('guide.docs');
 Route::get('/examples', [GuideController::class, 'examples'])->name('guide.examples');
+Route::get('/examples/', [GuideController::class, 'examples']);
 
 // Serve example files with iframe embedding allowed (for previews)
 Route::middleware(AllowIframeEmbedding::class)->group(function () {
