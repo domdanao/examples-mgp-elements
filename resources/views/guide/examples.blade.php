@@ -281,7 +281,7 @@
 
   <!-- Floating bottom navigation -->
   <nav class="floating-nav">
-    <a href="{{ route('guide.index') }}" class="floating-nav-item" title="Home">
+    <a href="/" class="floating-nav-item" title="Home">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M3 10l7-7 7 7M4 9v8a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h0a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V9"/>
       </svg>
