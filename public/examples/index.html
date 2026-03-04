@@ -88,8 +88,24 @@
       height: 200px;
       overflow: hidden;
       position: relative;
-      background: #F2F2F7;
+      background: linear-gradient(135deg, #F5F5F7 0%, #E8E8ED 100%);
       flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .preview-fallback {
+      text-align: center;
+      color: #8E8E93;
+      font-size: 13px;
+    }
+    
+    .preview-fallback svg {
+      width: 48px;
+      height: 48px;
+      fill: #C7C7CC;
+      margin-bottom: 8px;
     }
 
     .preview iframe {
@@ -243,7 +259,7 @@
       a.href = ex.href;
       a.innerHTML = `
         <div class="preview">
-          <iframe src="${ex.href}" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+          <iframe src="${ex.href}" loading="lazy" tabindex="-1" aria-hidden="true" sandbox="allow-scripts allow-same-origin allow-forms" onerror="this.style.display='none'"></iframe>
         </div>
         <div class="card-body">
           <div class="card-title">${ex.title}</div>
