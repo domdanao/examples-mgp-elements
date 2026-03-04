@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Examples — Magpie Components</title>
+  <link rel="icon" type="image/png" href="/magpie-logo.png">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -18,6 +19,25 @@
     .header {
       max-width: 960px;
       margin: 0 auto 48px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .header-logo {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+    }
+    
+    .header-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    
+    .header-text {
+      flex: 1;
     }
 
     .header h1 {
@@ -166,8 +186,11 @@
 <body>
 
   <div class="header">
-    <h1>Magpie Components — Examples</h1>
-    <p>Live previews of different integration styles. Click any card to open the full example.</p>
+    <div class="header-logo"><img src="/magpie-logo.png" alt="Magpie"></div>
+    <div class="header-text">
+      <h1>Magpie Components — Examples</h1>
+      <p>Live previews of different integration styles. Click any card to open the full example.</p>
+    </div>
   </div>
 
   <div class="grid" id="grid"></div>
