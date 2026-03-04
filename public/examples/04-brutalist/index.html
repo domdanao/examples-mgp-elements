@@ -264,10 +264,11 @@
 
       try {
         const source = await cardNumber.createSource({
+          name: "Test User",  // Required field for source creation
           redirect: {
-            success: "https://your-site.com/checkout/success",
-            fail: "https://your-site.com/checkout/fail",
-            notify: "https://your-site.com/checkout/notify"
+            success: "https://your-site.com/success",
+            fail: "https://your-site.com/fail",
+            notify: "https://your-site.com/notify"
           }
         });
         msg.innerHTML = 'OK — Source: <code style="font-family:monospace">' + source.id + '</code>';

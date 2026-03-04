@@ -144,7 +144,14 @@
       result.className = "";
 
       try {
-        const source = await cardNumber.createSource();
+        const source = await cardNumber.createSource({
+          name: "Test User",  // Required field for source creation
+          redirect: {
+            success: "https://your-site.com/success",
+            fail: "https://your-site.com/fail",
+            notify: "https://your-site.com/notify"
+          }
+        });
         result.innerHTML = 'Source created: <code style="font-family:monospace">' + source.id + '</code>';
         result.className = "success";
       } catch (err) {

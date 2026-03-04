@@ -675,14 +675,15 @@
         shipping,
       });
 
-      const redirect = compact({
-        success: val("redirect-success"),
-        fail:    val("redirect-fail"),
-        notify:  val("redirect-notify"),
-      });
+      // Redirect is required - use form values or defaults
+      const redirect = {
+        success: val("redirect-success") || "https://your-site.com/success",
+        fail:    val("redirect-fail")    || "https://your-site.com/fail",
+        notify:  val("redirect-notify")  || "https://your-site.com/notify",
+      };
 
       const additionalData = {
-        name:            val("card-name"),
+        name:            val("card-name") || "Test User",  // Required field
         address_line1:   val("card-address-line1"),
         address_line2:   val("card-address-line2"),
         address_city:    val("card-address-city"),

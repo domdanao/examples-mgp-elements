@@ -273,10 +273,17 @@ The card number, expiry, and CVC are collected automatically from the mounted fi
 
 ### Minimal call
 
-Only the three card fields (number, expiry, CVC) are strictly required. You can call `createSource()` with no arguments:
+The card fields (number, expiry, CVC), cardholder name, and redirect URLs are required:
 
 ```javascript
-const source = await cardNumber.createSource();
+const source = await cardNumber.createSource({
+  name: "Cardholder Name",
+  redirect: {
+    success: "https://your-site.com/success",
+    fail: "https://your-site.com/fail",
+    notify: "https://your-site.com/notify"
+  }
+});
 ```
 
 ### Complete call
@@ -330,27 +337,24 @@ const source = await cardNumber.createSource({
 
 ### Parameters
 
-All fields are optional. The card number, expiry, and CVC come from the mounted input fields.
+The card number, expiry, and CVC come from the mounted input fields. The `name` and `redirect` fields are required. All other fields are optional.
 
 **Card fields**
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `name` | `string` | Cardholder name as it appears on the card |
-| `address_line1` | `string` | Card billing address line 1 |
-| `address_line2` | `string` | Card billing address line 2 |
-| `address_city` | `string` | Card billing city |
-| `address_state` | `string` | Card billing state or province |
-| `address_country` | `string` | Card billing country (ISO 3166-1 alpha-2, e.g. `"PH"`) |
-| `address_zip` | `string` | Card billing postal code |
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `name` | `string` | **Yes** | Cardholder name as it appears on the card |
+| `redirect.success` | `string` | **Yes** | URL to redirect to after successful 3DS authentication |
+| `redirect.fail` | `string` | **Yes** | URL to redirect to after failed 3DS authentication |
+| `redirect.notify` | `string` | **Yes** | Webhook URL for async payment status notifications |
+| `address_line1` | `string` | No | Card billing address line 1 |
+| `address_line2` | `string` | No | Card billing address line 2 |
+| `address_city` | `string` | No | Card billing city |
+| `address_state` | `string` | No | Card billing state or province |
+| `address_country` | `string` | No | Card billing country (ISO 3166-1 alpha-2, e.g. `"PH"`) |
+| `address_zip` | `string` | No | Card billing postal code |
 
-**Redirect URLs**
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `redirect.success` | `string` | URL to redirect to after successful 3DS authentication |
-| `redirect.fail` | `string` | URL to redirect to after failed 3DS authentication |
-| `redirect.notify` | `string` | Webhook URL for async payment status notifications |
 
 **Owner**
 
@@ -570,21 +574,27 @@ Creates a payment source. This endpoint is called internally by the iframe — *
 
 **Authentication:** `Authorization: Basic <base64(pk_live_key:)>`
 
-**Minimal request body** (only required fields):
+**Minimal request body** (required fields):
 
 ```json
 {
   "type": "card",
   "card": {
+    "name": "Cardholder Name",
     "number": "4012001037141112",
     "exp_month": "12",
     "exp_year": "2025",
     "cvc": "123"
+  },
+  "redirect": {
+    "success": "https://your-site.com/success",
+    "fail": "https://your-site.com/fail",
+    "notify": "https://your-site.com/notify"
   }
 }
 ```
 
-**Complete request body** (all optional fields included):
+**Complete request body** (all fields included):
 
 ```json
 {
@@ -1173,6 +1183,7 @@ A complete, copy-paste-ready integration with styling and error handling.
 
       try {
         const source = await cardNumber.createSource({
+          name: "Cardholder Name",  // Required field
           redirect: {
             success: "https://your-site.com/checkout/success",
             fail: "https://your-site.com/checkout/fail",
