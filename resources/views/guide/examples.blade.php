@@ -184,9 +184,59 @@
     text-decoration: none;
   }
   
+  /* Floating bottom navigation */
+  .floating-nav {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(30, 41, 59, 0.95);
+    backdrop-filter: blur(24px);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+  }
+
+  .floating-nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    border-radius: 12px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .floating-nav-item:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+
+  .floating-nav-item:first-child {
+    padding: 10px;
+  }
+
   @media (max-width: 640px) {
     .examples-grid {
       grid-template-columns: 1fr;
+    }
+
+    .floating-nav {
+      left: 16px;
+      right: 16px;
+      transform: none;
+      overflow-x: auto;
+      justify-content: flex-start;
     }
   }
 </style>
@@ -228,6 +278,20 @@
       @endforeach
     </div>
   </div>
+
+  <!-- Floating bottom navigation -->
+  <nav class="floating-nav">
+    <a href="{{ route('guide.index') }}" class="floating-nav-item" title="Home">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 10l7-7 7 7M4 9v8a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h0a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V9"/>
+      </svg>
+    </a>
+    @foreach($examples as $example)
+    <a href="{{ $example['path'] }}" class="floating-nav-item" target="_blank" title="{{ $example['title'] }}">
+      {{ $example['title'] }}
+    </a>
+    @endforeach
+  </nav>
 </div>
 @endsection
 
