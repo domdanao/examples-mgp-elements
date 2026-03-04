@@ -108,6 +108,7 @@ cardCvc.mount("#card-cvc");
 document.querySelector("#pay").addEventListener("click", async () => {
   try {
     const source = await cardNumber.createSource({
+      name: "Cardholder Name",  // Required
       redirect: {
         success: "https://your-site.com/checkout/success",
         fail: "https://your-site.com/checkout/fail",
@@ -970,10 +971,13 @@ The key was received but rejected by the upstream Magpie API.
 
 **`422 Validation failed`**
 
-Either the proxy rejected the request because required card fields are missing, or the Magpie API rejected the payload with its own validation error.
+The request is missing required fields or contains invalid data. Common causes:
 
-- Check that all three fields (number, expiry, CVC) have valid values before calling `createSource()`.
-- If the basic card fields are present, the error is coming from the Magpie API. The error message will contain their description of what failed.
+- Missing `name` field in `createSource()` call
+- Missing or incomplete `redirect` object (success, fail, notify URLs are all required)
+- Card fields (number, expiry, CVC) not filled in
+
+Check the response body for the specific field that failed validation.
 
 **`502 Connection error`**
 
@@ -1013,10 +1017,16 @@ curl -X POST https://components.magpie.im/api/v2/sources \
   -d '{
     "type": "card",
     "card": {
+      "name": "Test User",
       "number": "4242424242424242",
       "exp_month": 12,
       "exp_year": 2028,
       "cvc": "123"
+    },
+    "redirect": {
+      "success": "https://your-site.com/success",
+      "fail": "https://your-site.com/fail",
+      "notify": "https://your-site.com/notify"
     }
   }'
 # → {"object":"source","id":"src_..."}
