@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="hero">
-  <div class="hero-icon">🪶</div>
+  <div class="hero-icon"><img src="/magpie-logo.png" alt="Magpie"></div>
   <h1>Magpie Components</h1>
   <p>A secure, iframe-based card input system for collecting payment card data without exposing sensitive information to your application. Clone of Stripe Elements.</p>
   <div class="hero-buttons">

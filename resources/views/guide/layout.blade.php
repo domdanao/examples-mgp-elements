@@ -77,12 +77,15 @@
     .logo-icon {
       width: 36px;
       height: 36px;
-      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+    }
+    
+    .logo-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
     
     .logo-text {
@@ -422,13 +425,16 @@
     .hero-icon {
       width: 64px;
       height: 64px;
-      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-      border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 32px;
       margin: 0 auto 24px;
+    }
+    
+    .hero-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
     
     .hero h1 {
@@ -567,7 +573,7 @@
     <aside class="sidebar">
       <div class="sidebar-header">
         <a href="{{ route('guide.index') }}" class="logo">
-          <div class="logo-icon">🪶</div>
+          <div class="logo-icon"><img src="/magpie-logo.png" alt="Magpie"></div>
           <div class="logo-text">Magpie <span>Components</span></div>
         </a>
       </div>
